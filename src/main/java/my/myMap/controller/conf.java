@@ -13,5 +13,10 @@ public class conf {
         return "fragments/home";
     }
 
+    @GetMapping("/bustest")
+    public String bustest(){
+        return "fragments/bustest";
+    }
+
 
 }
