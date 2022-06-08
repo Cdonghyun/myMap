@@ -1,4 +1,5 @@
-
+// const express = require('express');
+// const router = express.Router();
 //API 키
 const key = "PFJo24LCvJzZzwvBaJscmSUs%2BRCK7VhdXDqP754kX2LM4c9%2B%2BPIulcBYh2m1A1POKCHhdzUouN4Nn26pFML47A%3D%3D"
 
@@ -13,12 +14,21 @@ const routeURL = 'http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?serv
 //버스 도착 정보
 const arrivalURL = 'http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll';
 
-    //검색값 가져오기
-    function getNum() {
-        const getId = document.getElementById("busID").value;
-        console.log(getId);
-    }
+let routeId;
 
-    const routeId = function (callback) {
-        const url = routeURL + key + "&" + "strSrch=" + getNum();
+    //검색값 가져오기
+    function getNum(){
+        const getId = document.getElementById("busID").value;
+        const url = routeURL + key + "&" + "strSrch=" + getId;
+        console.log(url);
+
+        if(DataTransfer.hasOwnProperty("msgBody")) {
+            routeId = data.ServiceResult.msgBody[0].itemList[0].busRouteId[0];
+            callback(routId);
+            console.log(routeId);
+        }
+        else{
+            callback(null);
+        }
+
     }

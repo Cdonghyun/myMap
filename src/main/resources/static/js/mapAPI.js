@@ -277,7 +277,7 @@
 }
 }
 
-$.ajax({
+/*$.ajax({
     url: '/information',
     type: "GET",
     dataType: "text",
@@ -291,7 +291,7 @@ $.ajax({
             map: map
         });
     }
-});
+});*/
 
 
 
