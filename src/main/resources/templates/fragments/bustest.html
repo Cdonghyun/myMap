@@ -9,9 +9,10 @@
 </head>
 <body>
 <p>버스 노선 검색</p> <br>
-<input type="text" value="" id="busID" size="15">
+<form method="get" action="/bus/BusSearch">
+<input type="text" value="" name="busNum" size="15">
 <button type="submit" >검색하기</button>
-
+</form>
 
 <script src="../js/RouteList.js"></script>
 </body>

@@ -1,12 +1,14 @@
 package my.myMap.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-
-@Getter
-@Setter
+@Data
 public class Bus {
-    private String busID;
+    public Bus(String busNum) {
+        this.busNum = busNum;
+    }
+
+    private String busNum;
 }
