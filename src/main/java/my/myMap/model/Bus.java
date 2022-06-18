@@ -1,14 +1,15 @@
 package my.myMap.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Setter @Getter @ToString
 public class Bus {
-    public Bus(String busNum) {
-        this.busNum = busNum;
-    }
+
 
     private String busNum;
+
 }
