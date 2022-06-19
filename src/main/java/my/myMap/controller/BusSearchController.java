@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 
 @Controller
-@RequestMapping("bus")
+@RequestMapping(value = "bus", method = RequestMethod.GET)
 public class BusSearchController {
 
     @Autowired
@@ -23,11 +21,9 @@ public class BusSearchController {
 
     @GetMapping("/BusSearch")
     @ResponseBody
-    public List<Map<String, Object>> busNumJsonParser(Bus busNum) throws IOException {
+    public String busNumJsonParser(Bus busNum) throws IOException {
         busID busID = jsonService.JsonTransNum(busNum);
-        List<Map<String, Object>> busIDS = jsonService.NumTransID(busID.getBusRouteId());
-
-        return  busIDS;
-
+        String busIDS = jsonService.NumTransID(busID.getBusRouteId());
+        return busIDS;
     }
 }

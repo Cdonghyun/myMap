@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import my.myMap.model.Bus;
-import my.myMap.model.RouteID;
 import my.myMap.model.busID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class JsonService {
     @Autowired
     private XMLService xmlService;
 
-    public busID JsonTransNum(@RequestParam Bus busNum) throws IOException {
+    public busID JsonTransNum(Bus busNum) throws IOException {
 
         HashMap<String, Object> itemList = xmlService.getItem(urlService.RouteNum(busNum));
         System.out.println("busRouteId = " + itemList.get(("busRouteId")));
@@ -34,22 +33,22 @@ public class JsonService {
         return busID;
     }
 
-    public List<Map<String, Object>> NumTransID(int busRouteId) throws IOException {
+    public String NumTransID(int busRouteId) throws IOException {
 
         List itemList = xmlService.getItemList(urlService.RouteID(busRouteId));
         System.out.println("itemList = " + itemList);
 
-        //json -> List<vo> (model)
+        //List<map> -> List<vo> ->json String
         ObjectMapper mapper = new ObjectMapper();
         String jsonList = "";
         jsonList = mapper.writeValueAsString(itemList);
         List<Map<String, Object>> itemMap = mapper.readValue(jsonList, new TypeReference<List<Map<String, Object>>>() {});
-        System.out.println("itemMap = " + itemMap);
-            for (Map<String, Object> busID1 : itemMap){
-                System.out.println("busID1.getItemList() = " + busID1.get("gpsX"));
-                System.out.println("busID1.getItemList() = " + busID1.get("gpsY"));
-
-            }
-        return itemMap;
+        String jsonStr =mapper.writeValueAsString(itemMap);
+        System.out.println("itemMap = " + jsonStr);
+//            for (Map<String, Object> busID1 : itemMap){
+//                System.out.println("busID1.getItemList() = " + busID1.get("gpsX"));
+//                System.out.println("busID1.getItemList() = " + busID1.get("gpsY"));
+//            }
+        return jsonStr;
         }
     }

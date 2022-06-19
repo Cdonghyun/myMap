@@ -1,17 +1,19 @@
 
 
 
-var btn = document.querySelector('input');
-var txt = document.querySelector('p');
+$.ajax({
+    anyne: true,
+    url: '/map/BusSearch',
+    type: JSON.stringify(param),
+    dataType: "text",
+    success: function (data){
 
-btn.addEventListener('click', updateBtn);
+        var gpsX = $(this).find("gpsX").text();
+        var gpsY = $(this).find("gpsY").text();
 
-function updateBtn() {
-    if (btn.value === '기계 켜기') {
-        btn.value = '기계 끄기';
-        txt.textContent = '기계가 켜졌습니다!';
-    } else {
-        btn.value = '기계 켜기';
-        txt.textContent = '기계가 멈췄습니다.';
+        markers =new naver.maps.Marker({
+            position: new naver.maps.LatLng(gpsY,gpsX),
+            map: map
+        });
     }
-}
+});

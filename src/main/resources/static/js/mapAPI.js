@@ -41,19 +41,19 @@
 
 
 
-    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
     var infoWindow = new naver.maps.InfoWindow({zIndex:1});
     var ps = new kakao.maps.services.Places();
     window.onload = function (){
     const searchForm = document.querySelector('.form');
     searchForm.addEventListener('submit', function(e){
     e.preventDefault();
-    // 키워드로 장소를 검색합니다
+    // 키워드로 장소를 검색
     searchPlaces();
 })
 }
 
-    // 키워드 검색을 요청하는 함수입니다
+    // 키워드 검색을 요청하는 함수
     function searchPlaces() {
 
     var keyword = document.getElementById('keyword').value;
@@ -63,11 +63,11 @@
     return false;
 }
 
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청
     ps.keywordSearch( keyword, placesSearchCB);
 }
 
-    // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+    // 장소검색이 완료됐을 때 호출되는 콜백함수
     function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
 
@@ -75,7 +75,7 @@
     // 검색 목록과 마커를 표출합니다
     displayPlaces(data); // naver 사용
 
-    // 페이지 번호를 표출합니다
+    // 페이지 번호 표출
     displayPagination(pagination); // no
 
 } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -91,7 +91,7 @@
 }
 }
 
-    // 검색 결과 목록과 마커를 표출하는 함수입니다
+    // 검색 결과 목록과 마커를 표출하는 함수
     function displayPlaces(places) {
 
     var listEl = document.getElementById('placesList'),
@@ -100,10 +100,10 @@
     bounds = new naver.maps.LatLngBounds(),
     listStr = '';
 
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    // 검색 결과 목록에 추가된 항목 제거
     removeAllChildNods(listEl);
 
-    // 지도에 표시되고 있는 마커를 제거합니다
+    // 지도에 표시되고 있는 마커 제거
     removeMarker();
 
     for ( var i=0; i<places.length; i++ ) {
@@ -111,17 +111,17 @@
     const lon = places[i].x;
     const lat = places[i].y;
 
-    // 마커를 생성하고 지도에 표시합니다
+    // 마커를 생성하고 지도에 표시
     var placePosition = new naver.maps.LatLng(lat, lon),
     marker = addMarker(placePosition, i),
     itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-    // LatLngBounds 객체에 좌표를 추가합니다
+    // LatLngBounds 객체에 좌표 추가
     bounds.extend(placePosition);
 
     // 마커와 검색결과 항목에 mouseover 했을때
-    // 해당 장소에 인포윈도우에 장소명을 표시합니다
+    // 해당 장소에 인포윈도우에 장소명 표시
     // mouseout 했을 때는 인포윈도우를 닫습니다
     (function(marker, title) {
     naver.maps.Event.addListener(marker, 'mouseover', function() {
@@ -167,15 +167,15 @@
     fragment.appendChild(itemEl);
 }
 
-    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가
     listEl.appendChild(fragment);
     menuEl.scrollTop = 0;
 
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정
     map.panToBounds(bounds);
 }
 
-    // 검색결과 항목을 Element로 반환하는 함수입니다
+    // 검색결과 항목을 Element로 반환하는 함수
     function getListItem(index, places) {
 
     var el = document.createElement('li'),
@@ -199,7 +199,7 @@
     return el;
 }
 
-    // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+    // 마커를 생성하고 지도 위에 마커를 표시하는 함수
     function addMarker(position, idx) {
     var
     marker = new naver.maps.Marker({
@@ -213,13 +213,13 @@
 }
 });
 
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+    marker.setMap(map); // 지도 위에 마커를 표출
+    markers.push(marker);  // 배열에 생성된 마커를 추가
 
     return marker;
 }
 
-    // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+    // 지도 위에 표시되고 있는 마커를 모두 제거
     function removeMarker() {
     for ( var i = 0; i < markers.length; i++ ) {
     markers[i].setMap(null);
@@ -227,13 +227,13 @@
     markers = [];
 }
 
-    // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+    // 검색결과 목록 하단에 페이지번호를 표시하는 함수
     function displayPagination(pagination) {
     var paginationEl = document.getElementById('pagination'),
     fragment = document.createDocumentFragment(),
     i;
 
-    // 기존에 추가된 페이지번호를 삭제합니다
+    // 기존에 추가된 페이지번호 삭제
     while (paginationEl.hasChildNodes()) {
     paginationEl.removeChild (paginationEl.lastChild);
 }
@@ -258,8 +258,8 @@
     paginationEl.appendChild(fragment);
 }
 
-    // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-    // 인포윈도우에 장소명을 표시합니다
+    // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
+    // 인포윈도우에 장소명을 표시
     function displayInfoWindow(marker, title) {
     var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
@@ -270,30 +270,30 @@
 
 }
 
-    // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+    // 검색결과 목록의 자식 Element를 제거하는 함수
     function removeAllChildNods(el) {
     while (el.hasChildNodes()) {
     el.removeChild (el.lastChild);
 }
 }
+const param = {"gpsX" : gpsX , "gpsY" : gpsY};
 
-/*$.ajax({
-    url: '/information',
-    type: "GET",
-    dataType: "text",
-    success: function (data){
+    $.ajax({
+        anyne: true,
+        url: '/bus/BusSearch',
+        type: JSON.stringify(param),
+        dataType: "json",
+        success: function (busID){
+            alert(busID);
+            var gpsX = $(this).find("gpsX").text();
+            var gpsY = $(this).find("gpsY").text();
 
-        var tmX = $(this).find("tmX").text();
-        var tmY = $(this).find("tmY").text();
-
-        markers =new naver.maps.Marker({
-            position: new naver.maps.LatLng(tmY,tmX),
-            map: map
-        });
-    }
-});*/
-
-
+            markers =new naver.maps.Marker({
+                position: new naver.maps.LatLng(gpsY,gpsX),
+                map: map
+            });
+        }
+    });
 
 
 
